@@ -341,6 +341,10 @@ void execute_pinch(int fd, uint32_t device_flags, int touch1_x1,
   print_action(ACTION_END, "pinch", NULL);
 }
 
+void execute_raw(int fd, int type, int code, int value) {
+  write_event(fd, type, code, value);
+}
+
 void execute_keyup(int fd, int key) {
   write_event(fd, EV_KEY, key, 0);
 }
@@ -537,6 +541,9 @@ int main(int argc, char *argv[])
       } else if (strcmp(cmd, "keydown") == 0) {
         checkArguments(cmd, num_args, 1, lineCount);
         execute_keydown(fd, args[0]);
+      } else if (strcmp(cmd, "raw") == 0) {
+        checkArguments(cmd, num_args, 1, lineCount);
+        execute_raw(fd, args[0], args[1], args[2]);
       } else {
         printf("Unrecognized command at line %d: '%s'\n", lineCount, cmd);
         return 1;
