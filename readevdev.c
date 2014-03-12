@@ -29,10 +29,18 @@ int main(int argc, char** argv)
   }
 
   struct input_event event;
+  struct timeval tv;
+  struct timeval new_tv;
+
 
   while (1) {
+    gettimeofday(&tv, NULL);
     fread(&event, sizeof(event), 1, event_device);
+    gettimeofday(&new_tv, NULL);
     fprintf(out_file, "raw %hd %hd %d\n", event.type, event.code, event.value);
+    int time_msec = ((new_tv.tv_sec - tv.tv_sec) * 1000) +
+                    ((new_tv.tv_usec - tv.tv_usec) / 1000);
+    fprintf(out_file, "sleep %d\n", time_msec);
     fflush(out_file);
   }
 
