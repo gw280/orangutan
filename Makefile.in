@@ -8,13 +8,16 @@ ALDFLAGS :=--sysroot $(NDKROOT)/platforms/android-9/arch-arm -fPIC -mandroid
 
 PROGRAMS := mkdevinfo \
             orng \
-            su
+            su \
+	    readevdev
 
 mkdevinfo_OBJECTS := mkdevinfo.o
 
 orng_OBJECTS := orng.o
 
 su_OBJECTS := su.o
+
+readevdev_OBJECTS := readevdev.c
 
 .PHONY: all clean push
 
